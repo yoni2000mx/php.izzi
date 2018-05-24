@@ -1,0 +1,31 @@
+<?php
+//http://0.0.0.0:8080/izzi.php?url=01&canal=AXN&calidad=05&stream_audio=07&type=streaming.m3u8
+//url 01 para live.izzitv.mx
+//url 02 para 189.216.247.113
+//stream_audio del 01 al 06
+//calidad del 01 al 06
+
+
+$url = $_GET['url'];
+$canal = $_GET['canal'];
+$calidad = $_GET['calidad'];
+$stream_audio = $_GET['stream_audio'];
+
+
+$contenido = '#EXTM3U
+#EXT-X-VERSION:4
+#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",NAME="spa",DEFAULT=YES,AUTOSELECT=YES,LANGUAGE="spa",URI="___url___/Content/HLS/Live/Channel('.$canal.')/Stream(__)/index.m3u8"
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=1237272,RESOLUTION=544x408,AUDIO="a udio"
+___url___/Content/HLS/Live/Channel('.$canal.')/Stream('.$calidad.')/index.m3u8';
+
+
+$contenido = str_replace ("Stream(__)","Stream($stream_audio)", $contenido);
+
+
+if ($url==01) {
+$contenido = str_replace ("___url___","http://live.izzitv.mx", $contenido);
+}
+if ($url==02) {
+$contenido = str_replace ("___url___","http://189.216.247.113", $contenido);
+}
+echo $contenido;
